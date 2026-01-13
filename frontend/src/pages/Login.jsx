@@ -6,6 +6,7 @@ const Login = () => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState(null);
   const [chessUser, setChessUser] = useState("");
+  const [leetcodeUser, setLeetcodeUser] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleGithubLogin = () => {
@@ -31,6 +32,24 @@ const Login = () => {
     }
   };
 
+  const handleLeetCodeJudge = async (e) => {
+    e.preventDefault();
+    if (!leetcodeUser) return;
+
+    setLoading(true);
+    try {
+      const res = await axios.post("http://localhost:5000/api/leetcode", {
+        username: leetcodeUser,
+      });
+      navigate("/dashboard", {
+        state: { initialData: res.data, type: "leetcode" },
+      });
+    } catch (err) {
+      alert("User not found or Server Error");
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-zinc-950 text-gray-300 font-mono flex flex-col items-center justify-center p-4">
       <div className="text-center mb-12 space-y-4">
@@ -45,7 +64,7 @@ const Login = () => {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl w-full">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl w-full">
         <div
           onClick={() => setActiveTab("github")}
           className={`
@@ -113,6 +132,55 @@ const Login = () => {
               <button
                 disabled={loading}
                 className="bg-green-600 text-white px-6 font-bold hover:bg-green-500"
+              >
+                {loading ? "..." : "GO"}
+              </button>
+            </form>
+          ) : (
+            <div className="w-full py-3 text-center text-zinc-500 border border-zinc-800 uppercase tracking-widest text-sm">
+              Select to Enter
+            </div>
+          )}
+        </div>
+        <div
+          onClick={() => setActiveTab("leetcode")}
+          className={`
+            cursor-pointer p-8 border transition-all duration-300 relative overflow-hidden group
+            ${
+              activeTab === "leetcode"
+                ? "border-yellow-500 bg-yellow-500/5"
+                : "border-zinc-800 bg-zinc-900 hover:border-zinc-600"
+            }
+          `}
+        >
+          <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity text-yellow-500">
+            {/* Simple LeetCode-ish Icon */}
+            <svg className="w-24 h-24" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M16.102 17.93l-2.697 2.607c-.466.467-1.111.662-1.823.662s-1.357-.195-1.824-.662l-4.332-4.363c-.467-.467-.702-1.15-.702-1.863s.235-1.357.702-1.824l4.319-4.38c.467-.467 1.125-.645 1.837-.645s1.357.195 1.823.662l2.697 2.606c.514.515 1.365.497 1.9-.038.535-.536.553-1.387.039-1.901l-2.609-2.636a5.055 5.055 0 0 0-2.445-1.337l2.467-2.503c.516-.514.498-1.366-.037-1.901-.535-.535-1.387-.552-1.902-.038l-10.1 10.101c-.981.982-1.494 2.337-1.494 3.835 0 1.498.513 2.895 1.494 3.875l4.347 4.361c.981.979 2.337 1.452 3.834 1.452s2.853-.512 3.835-1.494l2.609-2.637c.514-.514.496-1.365-.039-1.9s-1.386-.553-1.899-.039z" />
+            </svg>
+          </div>
+
+          <h2 className="text-2xl font-bold text-white mb-2">LeetCode</h2>
+          <p className="text-zinc-500 text-sm mb-6">
+            Judge my acceptance rate and inability to center a div.
+          </p>
+
+          {activeTab === "leetcode" ? (
+            <form
+              onSubmit={handleLeetCodeJudge}
+              className="flex gap-2 animate-fade-in"
+            >
+              <input
+                autoFocus
+                type="text"
+                placeholder="Username"
+                className="bg-zinc-950 border border-yellow-500/30 text-white p-3 w-full focus:outline-none focus:border-yellow-500"
+                value={leetcodeUser}
+                onChange={(e) => setLeetcodeUser(e.target.value)}
+              />
+              <button
+                disabled={loading}
+                className="bg-yellow-600 text-black px-6 font-bold hover:bg-yellow-500"
               >
                 {loading ? "..." : "GO"}
               </button>

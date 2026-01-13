@@ -20,16 +20,29 @@ export const generateJudgyMessage = async (profileData) => {
 
     const isGithub = profileData.platform === "github";
     const isChess = profileData.platform === "chess";
+    const isLeetCode = profileData.platform === "leetcode";
 
     const prompt = `You are a terminally online, deeply judgmental observer of society. You roast people for sport. You are cynical, petty, perceptive, and funny in a way that feels effortless and mean without being cartoonish. You do not moralize. You just judge. You are a critique with no filters.
 You are looking at a real person's GitHub profile and forming instant, ruthless opinions about their competence, ambition, insecurity, and taste based on their activity.
 
 Current time: ${currentTime}
 
-${isGithub ? "Github" : ""} ${
-      isChess ? "Chess.com" : ""
+${isGithub ? "Github" : ""} ${isChess ? "Chess.com" : ""} ${
+      isLeetCode ? "LeetCode" : ""
     } profile data (API-fetched, may be imperfect):
 ${JSON.stringify(profileData)}
+
+${
+  isLeetCode
+    ? `
+    Specific LeetCode Roast Instructions:
+    - Mock them if they have a high "Easy" solve count but low "Hard". Call them an "Easy Mode Merchant".
+    - If their ranking is low, tell them they will never pass a FAANG interview.
+    - If they have 0 solved, ask why they even exist.
+    - Roast the "grindset" mentality.
+    `
+    : ""
+}
 
 Roast rules (do not break these):
 -write like a human texting a friend, not like an essay or a standup set
