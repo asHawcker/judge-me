@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
+const SERVER_URL = import.meta.env.VITE_SERVER_URL;
+
 const Login = () => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState(null);
@@ -10,7 +12,7 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
 
   const handleGithubLogin = () => {
-    window.location.href = "http://localhost:5000/auth/github";
+    window.location.href = `${SERVER_URL}/auth/github`;
   };
 
   const handleChessJudge = async (e) => {
@@ -19,7 +21,7 @@ const Login = () => {
 
     setLoading(true);
     try {
-      const res = await axios.post("http://localhost:5000/api/chess", {
+      const res = await axios.post(`${SERVER_URL}/api/chess`, {
         username: chessUser,
       });
       console.log("Navigating to dashboard with data:", res.data);
@@ -38,7 +40,7 @@ const Login = () => {
 
     setLoading(true);
     try {
-      const res = await axios.post("http://localhost:5000/api/leetcode", {
+      const res = await axios.post(`${SERVER_URL}/api/leetcode`, {
         username: leetcodeUser,
       });
       navigate("/dashboard", {
