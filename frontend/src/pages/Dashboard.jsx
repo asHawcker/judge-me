@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 
-const API_URL = import.meta.env.VITE_SERVER_URL || "http://localhost:5000";
+const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 import leetcodeLogo from "../assets/leetcodeLogo.svg";
 import githubLogo from "../assets/githubLogo.svg";
 
@@ -30,7 +30,7 @@ const Dashboard = () => {
         }
 
         try {
-          const res = await axios.get(`${API_URL}/api/github`, {
+          const res = await axios.get(`${SERVER_URL}/api/github`, {
             headers: { Authorization: `Bearer ${storedToken}` },
           });
           setData(res.data);
@@ -170,7 +170,7 @@ const Dashboard = () => {
                         Blitz
                       </span>
                       <span className="text-white font-bold text-lg">
-                        {data.ratings?.chess_blitz?.last?.rating || "Unrated"}
+                        {data.blitz_rating || "Unrated"}
                       </span>
                     </div>
                     <div>
@@ -178,7 +178,7 @@ const Dashboard = () => {
                         Rapid
                       </span>
                       <span className="text-white font-bold text-lg">
-                        {data.ratings?.chess_rapid?.last?.rating || "Unrated"}
+                        {data.rapid_rating || "Unrated"}
                       </span>
                     </div>
                   </div>

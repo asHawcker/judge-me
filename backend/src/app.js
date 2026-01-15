@@ -34,7 +34,7 @@ app.get("/", (req, res) => {
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-  console.log(`\nServer is running on http://localhost:${PORT}`);
+  console.log(`\nServer is running`);
   console.log(
     `Accepting requests from: ${
       process.env.CLIENT_URL || "http://localhost:5173"

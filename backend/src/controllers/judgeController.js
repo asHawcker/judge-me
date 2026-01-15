@@ -14,7 +14,7 @@ export const judgeGithub = async (req, res) => {
       platform: "github",
     });
 
-    res.json({ ...profileData, roast });
+    res.json({ ...profileData, roast, platform: "github" });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
