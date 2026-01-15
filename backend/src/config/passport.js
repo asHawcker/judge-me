@@ -4,12 +4,14 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
+const githubCallbackURL = `${process.env.SERVER_URL}/auth/github/callback`;
+
 passport.use(
   new GitHubStrategy(
     {
       clientID: process.env.GITHUB_CLIENT_ID,
       clientSecret: process.env.GITHUB_CLIENT_SECRET,
-      callbackURL: "/auth/github/callback",
+      callbackURL: githubCallbackURL``,
       scope: ["user:read", "repo"],
     },
     async (accessToken, refreshToken, profile, done) => {
