@@ -2,7 +2,7 @@
 
 > "Your stats don't lie, but they do make me laugh."
 
-**JudgeME** is a ruthlessly honest AI application that analyzes your public profiles—**GitHub, Chess.com, and LeetCode**—and uses Google's Gemini AI to generate a brutal, personalized roast based on your data.
+**JudgeME** is a ruthlessly honest AI application that analyzes your public profiles-**GitHub, Chess.com, and LeetCode**-and uses Google's Gemini AI to generate a brutal, personalized roast based on your data.
 
 ## Features
 
